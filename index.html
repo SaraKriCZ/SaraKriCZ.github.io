@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limie.Arts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────── */
+:root{
+  --lime:#78c832;   --lime-d:#5fa822;
+  --lime-1:#eaf7d4; --lime-2:#d2f0a0;
+  --teal:#4dbfaa;   --teal-1:#d4f2ec;
+  --purple:#a87ed4; --purple-1:#ecdff7;
+  --pink:#e076b4;   --pink-1:#fcdcf0;
+  --sand:#c49a62;   --sand-1:#f5e8d6;
+  --bg:#f6fcea;
+  --white:#ffffff;
+  --text:#1a2410;
+  --mid:#4d6028;
+  --muted:#8aaa60;
+  --border:#cce8a0;
+  --r:16px;
+}
+
+/* ─── RESET ──────────────────────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+/* ─── NAV ────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--white);
+  border-bottom:2px solid var(--border);
+  padding:0 clamp(1rem,4vw,2.5rem);
+  display:flex;align-items:center;justify-content:space-between;
+  height:56px;gap:1rem;
+}
+.nav-logo{
+  font-family:'Baloo 2',cursive;font-weight:800;font-size:1.15rem;
+  color:var(--lime);white-space:nowrap;flex-shrink:0;
+}
+.nav-logo span{color:var(--muted);font-weight:500;}
+.nav-links{display:flex;gap:.2rem;list-style:none;}
+.nav-links a{
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:.78rem;
+  color:var(--mid);padding:.32rem .78rem;border-radius:100px;transition:all .18s;
+}
+.nav-links a:hover{color:var(--lime);background:var(--lime-1);}
+.nav-links a.active{color:var(--white);background:var(--lime);}
+
+/* no burger — links always visible */
+.burger{display:none;}
+.mob-nav{display:none;}
+@media(max-width:640px){
+  .nav-links a{font-size:.7rem;padding:.28rem .55rem;}
+}
+@media(max-width:420px){
+  .nav-links a{font-size:.65rem;padding:.24rem .45rem;}
+  .nav-logo{font-size:1rem;}
+}
+
+/* ─── HERO ───────────────────────────────── */
+#home{
+  position:relative;overflow:hidden;
+  min-height:calc(100vh - 56px);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  max-width:1200px;margin:0 auto;
+  padding:0 clamp(1rem,4vw,2.5rem) 2rem;
+  align-items:center;gap:2rem;
+}
+
+/* Left: text stack */
+.hero-text{
+  display:flex;flex-direction:column;gap:1.5rem;
+  padding:3rem 0;position:relative;z-index:2;
+}
+.hero-chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:var(--lime-2);border:2px solid var(--lime);
+  color:var(--lime-d);font-size:.7rem;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:.28rem .9rem;border-radius:100px;width:fit-content;
+}
+.hero-title{
+  font-family:'Baloo 2',cursive;font-weight:800;
+  font-size:clamp(2.8rem,5.5vw,5rem);line-height:1.0;color:var(--text);
+}
+.hero-title .name{color:var(--lime);}
+.hero-sub{font-size:.95rem;color:var(--mid);line-height:1.75;max-width:400px;}
+.hero-btns{display:flex;gap:.7rem;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.66rem 1.4rem;border-radius:100px;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:.86rem;
+  border:2px solid transparent;cursor:pointer;transition:all .18s;
+}
+.btn-fill{background:var(--lime);color:var(--white);border-color:var(--lime);}
+.btn-fill:hover{background:var(--lime-d);border-color:var(--lime-d);transform:translateY(-2px);}
+.btn-out{background:var(--white);color:var(--lime);border-color:var(--lime);}
+.btn-out:hover{background:var(--lime-1);transform:translateY(-2px);}
+.hero-tags{display:flex;gap:.4rem;flex-wrap:wrap;}
+.htag{
+  font-size:.72rem;font-weight:700;padding:.24rem .75rem;
+  border-radius:100px;border:1.5px solid;
+}
+.ht-t{border-color:var(--teal);color:var(--teal);background:var(--teal-1);}
+.ht-p{border-color:var(--purple);color:var(--purple);background:var(--purple-1);}
+.ht-pk{border-color:var(--pink);color:var(--pink);background:var(--pink-1);}
+.ht-s{border-color:var(--sand);color:var(--sand);background:var(--sand-1);}
+
+/* Right: mascot stage */
+.hero-stage{
+  position:relative;display:flex;align-items:flex-end;justify-content:center;
+  min-height:520px;padding-bottom:2rem;
+}
+/* Big round backdrop blob — flat, no shadow */
+.hero-blob{
+  position:absolute;
+  width:420px;height:420px;
+  background:var(--lime-2);
+  border-radius:68% 32% 55% 45% / 50% 58% 42% 50%;
+  bottom:2rem;left:50%;transform:translateX(-50%);
+  animation:blobSpin 14s linear infinite;
+  z-index:0;
+}
+@keyframes blobSpin{to{border-radius:42% 58% 38% 62% / 58% 42% 60% 40%;}}
+
+/* Mascot image placeholder */
+.mascot-ph{
+  position:relative;z-index:2;
+  width:360px;height:420px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.6rem;cursor:pointer;
+}
+.mascot-ph .big-emoji{font-size:9rem;line-height:1;animation:masFloat 4s ease-in-out infinite alternate;}
+@keyframes masFloat{from{transform:translateY(0);}to{transform:translateY(-14px);}}
+.mascot-ph .mas-lbl{
+  font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:700;
+  color:var(--muted);text-align:center;
+  background:var(--white);border:1.5px dashed var(--lime);
+  padding:.28rem .8rem;border-radius:100px;
+}
+
+/* Floating art chips around mascot */
+.art-chip{
+  position:absolute;z-index:3;
+  overflow:visible;
+  border:none;
+  cursor:pointer;
+  transition:box-shadow .25s, filter .25s;
+  animation:chipFloat ease-in-out infinite alternate;
+}
+/* Unique blob shape per chip */
+.c1{ border-radius:62% 38% 46% 54% / 55% 48% 52% 45%; }
+.c2{ border-radius:44% 56% 63% 37% / 40% 60% 40% 60%; }
+.c3{ border-radius:55% 45% 38% 62% / 48% 55% 45% 52%; }
+.c4{ border-radius:38% 62% 54% 46% / 58% 42% 58% 42%; }
+
+@keyframes chipFloat{
+  from{ transform:translateY(0px)   rotate(-1.5deg); }
+  to  { transform:translateY(-11px) rotate( 2deg);   }
+}
+.art-chip:hover{
+  box-shadow:0 8px 24px rgba(0,0,0,.15);
+  filter:brightness(1.06);
+}
+.art-chip .chip-ph{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.3rem;font-size:.65rem;font-weight:700;color:var(--muted);
+  padding:.4rem;text-align:center;
+  /* background confined to blob shape */
+  border-radius:inherit;
+}
+/* Actual images inside chips overflow the blob freely */
+.art-chip img{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:130%;        /* slightly larger so transparent art breathes */
+  height:auto;
+  object-fit:contain;
+  pointer-events:none;
+}
+.art-chip .chip-ph span{font-size:1.5rem;}
+.c1{width:100px;height:100px;top:4%;left:0%;background:var(--teal-1);   animation-duration:4.2s;animation-delay:0s;}
+.c2{width:86px; height:86px; top:12%;right:2%;background:var(--purple-1);animation-duration:5.1s;animation-delay:-.8s;}
+.c3{width:94px; height:94px; bottom:20%;left:2%;background:var(--pink-1); animation-duration:3.8s;animation-delay:-1.6s;}
+.c4{width:82px; height:82px; bottom:18%;right:0%;background:var(--sand-1);animation-duration:4.6s;animation-delay:-.4s;}
+
+/* Stats bar */
+.hero-stats{
+  position:absolute;bottom:.5rem;left:0;right:0;
+  display:flex;justify-content:center;gap:0;z-index:3;
+}
+.stat-pill{
+  display:flex;flex-direction:column;align-items:center;
+  padding:.5rem 1.4rem;
+  border:2px solid var(--border);background:var(--white);
+  font-family:'Baloo 2',cursive;
+}
+.stat-pill:first-child{border-radius:14px 0 0 14px;}
+.stat-pill:last-child{border-radius:0 14px 14px 0;}
+.stat-pill:not(:first-child){border-left:none;}
+.stat-num{font-size:1.15rem;font-weight:800;color:var(--lime);}
+.stat-lbl{font-size:.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;}
+
+/* Scrolling ticker */
+.ticker-wrap{
+  background:var(--lime);border-top:2px solid var(--lime-d);border-bottom:2px solid var(--lime-d);
+  overflow:hidden;white-space:nowrap;padding:.5rem 0;position:relative;z-index:1;
+}
+.ticker-inner{display:inline-block;animation:tickerScroll 20s linear infinite;}
+.ticker-inner span{
+  display:inline-block;margin:0 2rem;
+  font-family:'Baloo 2',cursive;font-weight:700;font-size:.82rem;
+  color:var(--white);letter-spacing:.8px;text-transform:uppercase;
+}
+.ticker-inner span::before{content:'✦  ';opacity:.7;}
+@keyframes tickerScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+@media(max-width:760px){
+  #home{grid-template-columns:1fr;min-height:auto;padding-top:2rem;padding-bottom:1rem;}
+  .hero-text{padding:2rem 0 0;text-align:center;align-items:center;}
+  .hero-stage{min-height:380px;}
+  .hero-blob{width:300px;height:300px;}
+  .mascot-ph{width:260px;height:320px;}
+  .mascot-ph .big-emoji{font-size:7rem;}
+  .c1{width:76px;height:76px;top:2%;left:-4%;}
+  .c2{width:66px;height:66px;top:8%;right:-2%;}
+  .c3{width:72px;height:72px;bottom:22%;left:-4%;}
+  .c4{width:64px;height:64px;bottom:20%;right:-2%;}
+}
+
+/* ─── SECTION STRUCTURE ──────────────────── */
+.wrap{max-width:1100px;margin:0 auto;padding:5rem clamp(1rem,4vw,2rem);}
+.divider{max-width:1100px;height:2px;margin:0 auto;background:var(--border);}
+
+.sec-top{margin-bottom:2.8rem;}
+.sec-top.center{text-align:center;}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.68rem;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;
+  color:var(--lime-d);background:var(--lime-1);
+  border:1.5px solid var(--lime-2);padding:.24rem .82rem;border-radius:100px;
+  margin-bottom:.75rem;
+}
+.sec-title{font-family:'Baloo 2',cursive;font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;line-height:1.12;color:var(--text);}
+.sec-title .acc{color:var(--lime);}
+.sec-sub{color:var(--muted);margin-top:.5rem;font-size:.92rem;line-height:1.75;}
+
+/* ─── CARD BASE ──────────────────────────── */
+.card{background:var(--white);border:2px solid var(--border);border-radius:var(--r);}
+
+/* ─── PLACEHOLDER ────────────────────────── */
+.art-ph{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.4rem;background:var(--lime-1);cursor:pointer;position:relative;overflow:hidden;
+}
+.art-ph::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(120,200,50,.06) 10px,rgba(120,200,50,.06) 11px);}
+.art-ph .phi{font-size:1.6rem;position:relative;z-index:1;}
+.art-ph .phl{font-size:.67rem;font-weight:700;color:var(--muted);text-align:center;line-height:1.4;position:relative;z-index:1;padding:0 .5rem;}
+.art-ph .phb{position:relative;z-index:1;background:var(--white);border:1.5px dashed var(--lime);color:var(--lime);font-size:.65rem;font-weight:800;padding:.18rem .58rem;border-radius:100px;font-family:'Nunito',sans-serif;}
+.art-ph.tp{background:var(--teal-1);}
+.art-ph.pp{background:var(--purple-1);}
+.art-ph.pkp{background:var(--pink-1);}
+.art-ph.sp{background:var(--sand-1);}
+
+/* ─── COMMISSIONS ────────────────────────── */
+.curr-row{display:flex;justify-content:center;margin-bottom:1.8rem;}
+.ctoggle{display:flex;border:2px solid var(--border);border-radius:100px;overflow:hidden;}
+.cb{padding:.34rem 1.1rem;border:none;background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;cursor:pointer;transition:all .18s;}
+.cb.on{background:var(--lime);color:var(--white);}
+
+.tabs{display:flex;gap:.25rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem;}
+.tab{padding:.32rem .85rem;border-radius:100px;border:2px solid var(--border);background:var(--white);color:var(--mid);font-family:'Nunito',sans-serif;font-weight:700;font-size:.77rem;cursor:pointer;transition:all .18s;}
+.tab:hover{border-color:var(--lime);color:var(--lime);}
+.tab.on{background:var(--lime-1);border-color:var(--lime);color:var(--lime-d);}
+.tab-panel{display:none;}.tab-panel.on{display:block;}
+
+.price-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1rem;}
+.pc{background:var(--white);border:2px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s;}
+.pc:hover{border-color:var(--lime);transform:translateY(-4px);}
+.pc-img{position:relative;cursor:zoom-in;}
+.pc-img .art-ph{width:100%;aspect-ratio:1/1;}
+.zoom-h{position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,.88);border-radius:8px;padding:.18rem .45rem;font-size:.62rem;font-weight:800;color:var(--mid);opacity:0;transition:opacity .2s;}
+.pc:hover .zoom-h{opacity:1;}
+.pc-body{padding:.88rem 1rem;text-align:center;}
+.pc-lbl{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:1.8px;color:var(--teal);display:block;margin-bottom:.22rem;}
+.pc-body h3{font-family:'Baloo 2',cursive;font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:.38rem;}
+.price{font-family:'Baloo 2',cursive;font-size:1.55rem;font-weight:800;color:var(--lime);}
+.price .s{font-size:.85rem;color:var(--muted);}
+.price-open{font-size:.82rem;font-weight:700;color:var(--teal);}
+
+/* two-col info */
+.info-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem;}
+.icard{border-radius:var(--r);padding:1.1rem 1.2rem;border:2px solid;}
+.icard.do{border-color:#a8dcc8;background:linear-gradient(135deg,var(--white),var(--teal-1));}
+.icard.dont{border-color:#f0b8d4;background:linear-gradient(135deg,var(--white),var(--pink-1));}
+.icard h4{font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:700;margin-bottom:.6rem;}
+.icard.do h4{color:var(--teal);}.icard.dont h4{color:var(--pink);}
+.ilist{list-style:none;display:flex;flex-direction:column;gap:.16rem;}
+.ilist li{font-size:.82rem;color:var(--mid);display:flex;gap:.45rem;line-height:1.5;}
+.icard.do .ilist li::before{content:'✓';color:var(--teal);font-weight:900;flex-shrink:0;}
+.icard.dont .ilist li::before{content:'✗';color:var(--pink);font-weight:900;flex-shrink:0;}
+
+.extras{border:2px solid #d0b0ec;border-radius:var(--r);padding:1.1rem 1.3rem;margin-top:1rem;background:linear-gradient(135deg,var(--white),var(--purple-1));}
+.extras h4{font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:700;color:var(--purple);margin-bottom:.58rem;}
+.epills{display:flex;flex-wrap:wrap;gap:.38rem;}
+.ep{padding:.24rem .75rem;border-radius:100px;background:var(--white);border:1.5px solid #d0b0ec;color:var(--mid);font-size:.76rem;font-weight:600;}
+.ep b{color:var(--purple);}
+.dm{text-align:center;margin-top:1.8rem;padding:1rem 1.3rem;background:var(--lime-1);border:2px dashed var(--lime);border-radius:var(--r);color:var(--mid);font-size:.88rem;}
+.dm strong{color:var(--lime-d);}
+
+@media(max-width:560px){.info-row{grid-template-columns:1fr;}}
+@media(max-width:600px){.cmp{grid-template-columns:1fr;}}
+/* Ensure touch targets are large enough on mobile */
+@media(max-width:640px){
+  .btn{padding:.72rem 1.3rem;font-size:.9rem;min-height:44px;}
+  .tab{padding:.42rem .9rem;min-height:38px;}
+  .nav-links a{min-height:36px;display:flex;align-items:center;}
+  .sc{min-height:60px;}
+}
+
+/* ─── JELLIES ────────────────────────────── */
+.jintro{border:2px solid #a8dcc8;border-radius:var(--r);padding:1.6rem 1.8rem;margin-bottom:2.5rem;background:linear-gradient(135deg,var(--teal-1),var(--lime-1));overflow:hidden;}
+.jintro h3{font-family:'Baloo 2',cursive;font-size:1rem;font-weight:700;color:var(--teal);margin-bottom:.45rem;}
+.jintro p{color:var(--mid);font-size:.9rem;line-height:1.8;}
+.subh{font-family:'Baloo 2',cursive;font-weight:700;font-size:1rem;text-align:center;margin:2rem 0 1rem;}
+.subh.tl{color:var(--teal);}.subh.lm{color:var(--lime-d);}
+.traits{display:grid;grid-template-columns:repeat(auto-fill,minmax(162px,1fr));gap:.82rem;margin-bottom:2.5rem;}
+.trait{background:var(--white);border:2px solid var(--border);border-radius:var(--r);padding:.95rem;transition:border-color .2s,transform .2s;}
+.trait:hover{border-color:var(--teal);transform:translateY(-3px);}
+.ti{font-size:1.35rem;margin-bottom:.3rem;}
+.trait h4{font-family:'Baloo 2',cursive;font-size:.84rem;font-weight:700;color:var(--teal);margin-bottom:.2rem;}
+.trait p{font-size:.77rem;color:var(--muted);line-height:1.5;}
+
+/* Species compare — big image + info side by side */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1rem;}
+.spc{border-radius:var(--r);overflow:hidden;border:2px solid;}
+.spc.j{border-color:#a8d8cc;}.spc.u{border-color:#c8b0e8;}
+.spc-img{width:100%;aspect-ratio:4/3;cursor:zoom-in;}
+.spc-img .art-ph{width:100%;height:100%;}
+.spc-body{padding:1.1rem 1.2rem;background:var(--white);}
+.spc-body h3{font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;margin-bottom:.28rem;}
+.spc.j .spc-body h3{color:var(--teal);}.spc.u .spc-body h3{color:var(--purple);}
+.spc-badge{display:inline-block;font-size:.62rem;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;padding:.16rem .55rem;border-radius:100px;margin-bottom:.8rem;}
+.spc.j .spc-badge{background:var(--teal-1);color:var(--teal);border:1.5px solid #a8d8cc;}
+.spc.u .spc-badge{background:var(--purple-1);color:var(--purple);border:1.5px solid #c8b0e8;}
+.stl{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.stl li{font-size:.81rem;color:var(--mid);display:flex;gap:.4rem;line-height:1.4;}
+.spc.j .stl li::before{content:'✦';color:var(--teal);font-size:.58rem;flex-shrink:0;margin-top:3px;}
+.spc.u .stl li::before{content:'✦';color:var(--purple);font-size:.58rem;flex-shrink:0;margin-top:3px;}
+.warn{text-align:center;color:var(--pink);font-weight:800;font-size:.82rem;padding:.7rem 1rem;background:var(--pink-1);border:2px solid #f0b8d4;border-radius:12px;margin-bottom:2.5rem;}
+@media(max-width:560px){.cmp{grid-template-columns:1fr;}}
+
+.get-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:1rem;}
+.gc{background:var(--white);border:2px solid var(--border);border-radius:var(--r);padding:1.25rem;text-align:center;position:relative;transition:border-color .2s,transform .2s;}
+.gc:hover{border-color:var(--lime);transform:translateY(-4px);}
+.gc h3{font-family:'Baloo 2',cursive;font-size:.93rem;font-weight:700;color:var(--lime-d);margin-bottom:.33rem;}
+.gp{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--text);display:block;margin-bottom:.4rem;}
+.gc p{font-size:.79rem;color:var(--muted);line-height:1.5;}
+.spill{position:absolute;top:-9px;right:12px;font-size:.59rem;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;padding:.19rem .58rem;border-radius:100px;background:var(--lime);color:var(--white);}
+
+/* ─── SOCIALS ────────────────────────────── */
+.soc-wrap{display:grid;gap:.78rem;max-width:480px;margin:0 auto;}
+.sc{display:flex;align-items:center;gap:.95rem;background:var(--white);border:2px solid var(--border);border-radius:var(--r);padding:.95rem 1.2rem;transition:border-color .2s,transform .2s;}
+.sc:hover{transform:translateX(4px);}
+.sc.ig:hover{border-color:var(--pink);}
+.sc.bsky:hover{border-color:#5db4f5;}
+.sc.fa:hover{border-color:var(--sand);}
+.sc-ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.sc.ig .sc-ico{background:var(--pink-1);}
+.sc.bsky .sc-ico{background:#dff0fc;}
+.sc.fa .sc-ico{background:var(--sand-1);}
+.sc-info{flex:1;}
+.sc-name{font-family:'Baloo 2',cursive;font-size:.92rem;font-weight:700;color:var(--text);display:block;}
+.sc-hand{font-size:.78rem;color:var(--muted);}
+.sc-tag{font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:.18rem .52rem;border-radius:100px;}
+.sc.ig .sc-tag{background:var(--pink-1);color:var(--pink);border:1.5px solid #f0b8d4;}
+.sc.bsky .sc-tag{background:#dff0fc;color:#3d9fd4;border:1.5px solid #b0d4f0;}
+.sc.fa .sc-tag{background:var(--sand-1);color:var(--sand);border:1.5px solid #e0c4a0;}
+.sc-arr{color:var(--muted);margin-left:.4rem;font-size:.95rem;}
+
+/* ─── TOS ────────────────────────────────── */
+.tos-list{display:grid;gap:.85rem;}
+.tc{background:var(--white);border:2px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.th{padding:.85rem 1.2rem;display:flex;align-items:center;gap:.65rem;cursor:pointer;user-select:none;transition:background .18s;}
+.th:hover{background:var(--lime-1);}
+.th-ico{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.88rem;background:var(--lime-1);flex-shrink:0;}
+.th h3{font-family:'Baloo 2',cursive;font-size:.88rem;font-weight:700;color:var(--lime-d);flex:1;}
+.th-chev{color:var(--muted);font-size:.72rem;transition:transform .3s;}
+.tc.open .th-chev{transform:rotate(180deg);}
+.tb{max-height:0;overflow:hidden;transition:max-height .38s ease;}
+.tc.open .tb{max-height:900px;}
+.ti-wrap{padding:0 1.2rem .95rem;}
+.tr{padding:.5rem 0;border-bottom:1px solid var(--lime-1);font-size:.82rem;color:var(--mid);line-height:1.65;display:flex;gap:.65rem;align-items:flex-start;}
+.tr:last-child{border-bottom:none;}
+.td{width:6px;height:6px;border-radius:50%;background:var(--lime);flex-shrink:0;margin-top:7px;}
+.tr strong{color:var(--text);font-weight:700;}
+.tl{color:var(--lime-d);font-weight:700;}.tl:hover{text-decoration:underline;}
+
+/* ─── FOOTER ─────────────────────────────── */
+footer{
+  background:var(--white);border-top:2px solid var(--border);
+  text-align:center;padding:2.2rem 1.5rem;
+  color:var(--muted);font-size:.8rem;
+}
+.fb{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:var(--lime);margin-bottom:.35rem;}
+footer a{color:var(--lime);font-weight:700;}
+
+/* ─── LIGHTBOX ───────────────────────────── */
+/* Always in DOM — toggled via opacity/visibility so CSS transitions work */
+.lb{
+  position:fixed;inset:0;z-index:999;
+  background:rgba(0,0,0,.55);
+  display:flex;align-items:center;justify-content:center;padding:1.5rem;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .25s ease,visibility .25s ease;
+}
+.lb.open{opacity:1;visibility:visible;pointer-events:auto;}
+.lb-box{
+  background:var(--white);border-radius:20px;overflow:hidden;
+  max-width:600px;width:100%;border:3px solid var(--border);position:relative;
+  display:flex;flex-direction:column;
+  max-height:90vh;
+  transform:scale(.88) translateY(12px);
+  opacity:0;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), opacity .25s ease;
+}
+.lb.open .lb-box{transform:scale(1) translateY(0);opacity:1;}
+/* Image area — adapts to image natural aspect ratio, never crops */
+.lb-img{
+  width:100%;flex:1;min-height:0;
+  background:var(--lime-1);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.lb-img img{
+  display:block;width:100%;height:auto;
+  max-height:72vh;object-fit:contain;
+}
+.lb-img .art-ph{width:100%;min-height:220px;}
+.lb-foot{padding:.9rem 1.2rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.lb-title{font-family:'Baloo 2',cursive;font-weight:700;font-size:.9rem;color:var(--text);}
+.lb-price{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.25rem;color:var(--lime);}
+.lb-x{position:absolute;top:10px;right:12px;background:rgba(255,255,255,.9);border:2px solid var(--border);cursor:pointer;border-radius:100px;width:29px;height:29px;font-size:.9rem;color:var(--mid);display:flex;align-items:center;justify-content:center;}
+
+/* ─── BUBBLES ────────────────────────────── */
+.bub{position:fixed;border-radius:50%;pointer-events:none;animation:bubUp ease-in-out infinite;opacity:0;z-index:0;}
+@keyframes bubUp{0%{transform:translateY(0);opacity:0;}15%{opacity:.5;}85%{opacity:.2;}100%{transform:translateY(-130px) scale(.5);opacity:0;}}
+
+/* ─── JELLY FLOAT ANIMATIONS ─────────────── */
+@keyframes jellyFloat{
+  0%,100%{transform:translateY(0px);}
+  50%     {transform:translateY(-8px);}
+}
+/* Trait cards drift at different speeds/offsets */
+.trait{animation:jellyFloat 3.6s ease-in-out infinite;}
+.trait:nth-child(1){animation-duration:3.2s;animation-delay:0s;}
+.trait:nth-child(2){animation-duration:4.0s;animation-delay:-.7s;}
+.trait:nth-child(3){animation-duration:3.5s;animation-delay:-1.4s;}
+.trait:nth-child(4){animation-duration:4.2s;animation-delay:-.3s;}
+.trait:nth-child(5){animation-duration:3.8s;animation-delay:-1.0s;}
+.trait:nth-child(6){animation-duration:3.4s;animation-delay:-.6s;}
+/* Hover — pause float, scale up, glow */
+.trait:hover{
+  animation-play-state:paused;
+  transform:translateY(-6px) scale(1.04);
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px rgba(77,191,170,.18), 0 8px 24px rgba(77,191,170,.2);
+}
+
+/* Jellies visual placeholder grid inside jintro */
+.jintro-inner{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;align-items:start;}
+.jintro-text{}
+.jintro-visuals{display:flex;flex-direction:column;gap:.8rem;padding:10px 4px;}
+.jelly-vis{
+  border-radius:18px;overflow:visible;
+  border:none;
+  cursor:pointer;
+  position:relative;
+  animation:jellyFloat 4s ease-in-out infinite;
+  transition:filter .25s;
+}
+.jelly-vis:nth-child(2){animation-delay:-1.8s;animation-duration:3.6s;}
+.jelly-vis:hover{
+  animation-play-state:paused;
+  filter:brightness(1.05);
+}
+/* Blob shape lives on the placeholder background only */
+.jelly-vis .art-ph{
+  width:100%;aspect-ratio:4/3;
+  border-radius:62% 38% 52% 48% / 50% 55% 45% 50%;
+}
+.jelly-vis:nth-child(2) .art-ph{
+  border-radius:45% 55% 38% 62% / 55% 42% 58% 45%;
+}
+/* Image overflows freely — not clipped by blob */
+.jelly-vis img{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:115%;height:auto;
+  object-fit:contain;
+  pointer-events:none;display:block;
+}
+@media(max-width:600px){
+  .jintro-inner{grid-template-columns:1fr;}
+  .jintro-visuals{flex-direction:row;}
+  .jelly-vis{flex:1;}
+}
+
+/* ─── CAROUSEL ───────────────────────────── */
+.carousel-wrap{position:relative;display:flex;align-items:center;gap:.6rem;}
+.carousel{display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:1;padding:.25rem .1rem .5rem;}
+.carousel::-webkit-scrollbar{display:none;}
+.car-item{flex:0 0 calc(33.33% - .68rem);scroll-snap-align:start;min-width:175px;}
+@media(max-width:700px){.car-item{flex:0 0 calc(50% - .5rem);}}
+@media(max-width:420px){.car-item{flex:0 0 82%;}}
+.car-btn{flex-shrink:0;width:36px;height:36px;border-radius:50%;border:2px solid var(--border);background:var(--white);color:var(--mid);font-size:1.4rem;line-height:1;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;padding-bottom:2px;}
+.car-btn:hover{background:var(--lime);border-color:var(--lime);color:var(--white);}
+.car-btn:disabled{opacity:.3;cursor:default;}
+.car-dots{display:flex;justify-content:center;gap:.45rem;margin-top:.8rem;}
+.car-dot{width:7px;height:7px;border-radius:50%;background:var(--border);border:none;cursor:pointer;transition:background .18s,transform .18s;padding:0;}
+.car-dot.on{background:var(--lime);transform:scale(1.3);}
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLb(event)">
+  <div class="lb-box">
+    <button class="lb-x" onclick="closeLb()">✕</button>
+    <div class="lb-img" id="lb-img"></div>
+    <div class="lb-foot"><span class="lb-title" id="lb-t"></span><span class="lb-price" id="lb-p"></span></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">Limie<span>.Arts</span></a>
+  <ul class="nav-links">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#commissions">Commissions</a></li>
+    <li><a href="#jellies">Jellies</a></li>
+    <li><a href="#socials">Socials</a></li>
+    <li><a href="#tos">T.O.S.</a></li>
+  </ul>
+  <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<nav class="mob-nav" id="mobNav">
+  <a href="#home" onclick="closeMenu()">Home</a>
+  <a href="#commissions" onclick="closeMenu()">Commissions</a>
+  <a href="#jellies" onclick="closeMenu()">Jellies</a>
+  <a href="#socials" onclick="closeMenu()">Socials</a>
+  <a href="#tos" onclick="closeMenu()">T.O.S.</a>
+</nav>
+
+<!-- ══════ HERO ══════ -->
+<section id="home">
+  <!-- Left text -->
+  <div class="hero-text">
+    <div class="hero-chip">✦ Digital Artist & Species Owner ✦</div>
+    <h1 class="hero-title">
+      Hewwo, I'm<br>
+      <span class="name">Limie!</span> 🌿
+    </h1>
+    <p class="hero-sub">
+      I make <strong>digital anthro art and design</strong>. Creator of <strong>Jellies</strong>, my own closed species!
+    </p>
+    <div class="hero-btns">
+      <a href="#commissions" class="btn btn-fill">Commission me!</a>
+      <a href="#jellies" class="btn btn-out">Meet the Jellies</a>
+    </div>
+    <div class="hero-tags">
+      <span class="htag ht-t">✦ Anthro art</span>
+      <span class="htag ht-p">✦ Jellies</span>
+      <span class="htag ht-pk">✦ NSFW friendly</span>
+      <span class="htag ht-s">✦ Custom designs</span>
+    </div>
+  </div>
+
+  <!-- Right mascot stage -->
+  <div class="hero-stage">
+    <div class="hero-blob"></div>
+
+    <!-- Floating art examples -->
+    <div class="art-chip c1" onclick="openLb('Art example','',this)">
+      <div class="chip-ph"><span>🖼️</span>Art example<br>+ Upload</div>
+    </div>
+    <div class="art-chip c2" onclick="openLb('Art example','',this)">
+      <div class="chip-ph"><span>🖼️</span>Art example<br>+ Upload</div>
+    </div>
+    <div class="art-chip c3" onclick="openLb('Art example','',this)">
+      <div class="chip-ph"><span>🖼️</span>Art example<br>+ Upload</div>
+    </div>
+    <div class="art-chip c4" onclick="openLb('Art example','',this)">
+      <div class="chip-ph"><span>🖼️</span>Art example<br>+ Upload</div>
+    </div>
+
+    <!-- Mascot — main element -->
+    <div class="mascot-ph" onclick="openLb('Your mascot','',null)">
+      <img src="giftie1.png" loading="lazy" decoding="async" style="width:90%;aspect-ratio:2/3;object-fit:cover;">
+    </div>
+
+    <!-- Mini stats -->
+    <div class="hero-stats">
+      <div class="stat-pill"><span class="stat-num">Open</span><span class="stat-lbl">Commissions</span></div>
+      <div class="stat-pill"><span class="stat-num">Open</span><span class="stat-lbl">Jellies Customs</span></div>
+      <div class="stat-pill"><span class="stat-num">Closed</span><span class="stat-lbl">Art Trade</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════ COMMISSIONS ══════ -->
+<section id="commissions">
+  <div class="wrap">
+    <div class="sec-top center">
+      <div class="eyebrow">✦ Open for work ✦</div>
+      <h2 class="sec-title">Commission <span class="acc">Prices</span></h2>
+      <p class="sec-sub">All payments via PayPal · Commissioning me = agreeing to my <a href="#tos" style="color:var(--lime);font-weight:700;">T.O.S.</a></p>
+    </div>
+
+    <div class="curr-row">
+      <div class="ctoggle">
+        <button class="cb on" onclick="setCur('eur',this)">🇪🇺 EUR</button>
+        <button class="cb" onclick="setCur('usd',this)">🇺🇸 USD</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab on" onclick="showTab('chibis',this)">Chibis</button>
+      <button class="tab" onclick="showTab('icons',this)">Icons</button>
+      <button class="tab" onclick="showTab('busts',this)">Busts</button>
+      <button class="tab" onclick="showTab('hips',this)">Hips Up</button>
+      <button class="tab" onclick="showTab('fullbody',this)">Fullbody</button>
+      <button class="tab" onclick="showTab('refs',this)">References</button>
+      <button class="tab" onclick="showTab('customs',this)">Customs</button>
+    </div>
+
+    <div id="tp-chibis" class="tab-panel on"><div class="price-grid">
+      <div class="pc"><div class="pc-img" onclick="openLb('Chibi — Flat Color','30',this)"><div class="art-ph"><img src="flat_chibi.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Chibi</span><h3>Flat Color</h3><div class="price" data-eur="30" data-usd="33">30<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Chibi — Shaded','40',this)"><div class="art-pp"><img src="chibi.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Chibi</span><h3>Shaded</h3><div class="price" data-eur="40" data-usd="44">40<span class="s">€</span></div></div></div>
+    </div></div>
+
+    <div id="tp-icons" class="tab-panel"><div class="price-grid">
+      <div class="pc"><div class="pc-img" onclick="openLb('Icon — Sketchy','20',this)"><div class="art-ph tp"><img src="shaded_icon.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Icon</span><h3>Sketchy</h3><div class="price" data-eur="20" data-usd="22">20<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Icon — Flat Color','40',this)"><div class="art-ph"><div class="phi">🖼️</div><div class="phl">Flat Color example</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Icon</span><h3>Flat Color</h3><div class="price" data-eur="40" data-usd="44">40<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Icon — Shaded','50',this)"><div class="art-ph pkp"><img src="shaded_icon_example.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Icon</span><h3>Shaded</h3><div class="price" data-eur="50" data-usd="55">50<span class="s">€</span></div></div></div>
+    </div></div>
+
+    <div id="tp-busts" class="tab-panel"><div class="price-grid">
+      <div class="pc"><div class="pc-img" onclick="openLb('Bust — Sketchy','25',this)"><div class="art-ph"><img src="sketchy_bust.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Bust</span><h3>Sketchy</h3><div class="price" data-eur="25" data-usd="28">25<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Bust — Flat Color','45',this)"><div class="art-ph tp"><div class="phi">🖼️</div><div class="phl">Flat Color example</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Bust</span><h3>Flat Color</h3><div class="price" data-eur="45" data-usd="50">45<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Bust — Shaded','55',this)"><div class="art-ph pp"><img src="shaded_bust.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Bust</span><h3>Shaded</h3><div class="price" data-eur="55" data-usd="61">55<span class="s">€</span></div></div></div>
+    </div></div>
+
+    <div id="tp-hips" class="tab-panel"><div class="price-grid">
+      <div class="pc"><div class="pc-img" onclick="openLb('Hips Up — Sketchy','35',this)"><div class="art-ph sp"><img src="sketchy_bust.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Hips Up</span><h3>Sketchy</h3><div class="price" data-eur="35" data-usd="39">35<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Hips Up — Flat Color','55',this)"><div class="art-ph"><img src="flat_hips_example.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Hips Up</span><h3>Flat Color</h3><div class="price" data-eur="55" data-usd="61">55<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Hips Up — Shaded','70',this)"><div class="art-ph pkp"><img src="shaded_hips.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Hips Up</span><h3>Shaded</h3><div class="price" data-eur="70" data-usd="77">70<span class="s">€</span></div></div></div>
+    </div></div>
+
+    <div id="tp-fullbody" class="tab-panel"><div class="price-grid">
+      <div class="pc"><div class="pc-img" onclick="openLb('Fullbody — Sketchy','40',this)"><div class="art-ph tp"><div class="phi">🖼️</div><div class="phl">Sketchy example</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Fullbody</span><h3>Sketchy</h3><div class="price" data-eur="40" data-usd="44">40<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Fullbody — Flat Color','60',this)"><div class="art-ph pp"><div class="phi">🖼️</div><div class="phl">Flat Color example</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Fullbody</span><h3>Flat Color</h3><div class="price" data-eur="60" data-usd="66">60<span class="s">€</span></div></div></div>
+      <div class="pc"><div class="pc-img" onclick="openLb('Fullbody — Shaded','90',this)"><div class="art-ph pkp"><div class="phi">🖼️</div><div class="phl">Shaded example</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Fullbody</span><h3>Shaded</h3><div class="price" data-eur="90" data-usd="99">90<span class="s">€</span></div></div></div>
+    </div></div>
+
+    <!-- REFERENCES — carousel -->
+    <div id="tp-refs" class="tab-panel">
+      <div class="carousel-wrap">
+        <button class="car-btn car-prev" onclick="carMove('refs',-1)" aria-label="Previous">‹</button>
+        <div class="carousel" id="car-refs">
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Reference Sheet — Example 1','Open to discuss',this)"><div class="art-ph sp" style="aspect-ratio:4/3"><img src="reference_example.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Reference Sheet</span><h3>Example 1</h3><div class="price-open">Open to discuss 💬</div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Reference Sheet — Example 2','Open to discuss',this)"><div class="art-ph tp" style="aspect-ratio:4/3"><img src="ref2.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Reference Sheet</span><h3>Example 2</h3><div class="price-open">Open to discuss 💬</div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Reference Sheet — Example 3','Open to discuss',this)"><div class="art-ph pp" style="aspect-ratio:4/3"><div class="phi">🖼️</div><div class="phl">Ref Sheet example 3</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Reference Sheet</span><h3>Example 3</h3><div class="price-open">Open to discuss 💬</div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Reference Sheet — Example 4','Open to discuss',this)"><div class="art-ph pkp" style="aspect-ratio:4/3"><div class="phi">🖼️</div><div class="phl">Ref Sheet example 4</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Reference Sheet</span><h3>Example 4</h3><div class="price-open">Open to discuss 💬</div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Reference Sheet — Example 5','Open to discuss',this)"><div class="art-ph" style="aspect-ratio:4/3"><div class="phi">🖼️</div><div class="phl">Ref Sheet example 5</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Reference Sheet</span><h3>Example 5</h3><div class="price-open">Open to discuss 💬</div></div></div>
+        </div>
+        <button class="car-btn car-next" onclick="carMove('refs',1)" aria-label="Next">›</button>
+      </div>
+      <div class="car-dots" id="dots-refs"></div>
+    </div>
+
+    <!-- CUSTOMS — carousel -->
+    <div id="tp-customs" class="tab-panel">
+      <div class="carousel-wrap">
+        <button class="car-btn car-prev" onclick="carMove('customs',-1)" aria-label="Previous">‹</button>
+        <div class="carousel" id="car-customs">
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Custom / Redesign — Example 1','50',this)"><div class="art-ph pp"><img src="custom.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Custom / Redesign</span><h3>Example 1</h3><div class="price" data-eur="50" data-usd="55">From 50<span class="s">€</span></div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Custom / Redesign — Example 2','50',this)"><div class="art-ph tp"><<img src="custom2.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Custom / Redesign</span><h3>Example 2</h3><div class="price" data-eur="50" data-usd="55">From 50<span class="s">€</span></div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Custom / Redesign — Example 3','50',this)"><div class="art-ph sp"><img src="custom3.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Custom / Redesign</span><h3>Example 3</h3><div class="price" data-eur="50" data-usd="55">From 50<span class="s">€</span></div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Custom / Redesign — Example 4','50',this)"><div class="art-ph pkp"><img src="custom4.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Custom / Redesign</span><h3>Example 4</h3><div class="price" data-eur="50" data-usd="55">From 50<span class="s">€</span></div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Custom / Redesign — Example 5','50',this)"><div class="art-ph"><div class="phi">🖼️</div><div class="phl">Custom example 5</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Custom / Redesign</span><h3>Example 5</h3><div class="price" data-eur="50" data-usd="55">From 50<span class="s">€</span></div></div></div>
+          <div class="pc car-item"><div class="pc-img" onclick="openLb('Custom / Redesign — Example 6','50',this)"><div class="art-ph pp"><div class="phi">🖼️</div><div class="phl">Custom example 6</div><div class="phb">+ Upload</div></div><span class="zoom-h">🔍 Zoom</span></div><div class="pc-body"><span class="pc-lbl">Custom / Redesign</span><h3>Example 6</h3><div class="price" data-eur="50" data-usd="55">From 50<span class="s">€</span></div></div></div>
+        </div>
+        <button class="car-btn car-next" onclick="carMove('customs',1)" aria-label="Next">›</button>
+      </div>
+      <div class="car-dots" id="dots-customs"></div>
+    </div>
+
+    <div class="info-row">
+      <div class="icard do"><h4>✅ Will do</h4><ul class="ilist"><li>Furries &amp; anthros</li><li>Small mecha parts &amp; armor</li><li>Suggestive content</li><li>NSFW</li><li>Some kinks (just ask!)</li><li>Soft gore</li></ul></div>
+      <div class="icard dont"><h4>❌ Won't do</h4><ul class="ilist"><li>Heavy kinks</li><li>Hateful / political content</li><li>Species without access rights</li><li>Heavy gore</li><li>Robots</li><li>Feral</li></ul></div>
+    </div>
+    <div class="extras"><h4>✨ Add-ons &amp; Extras</h4><div class="epills"><div class="ep">Extra character <b>+100%</b></div><div class="ep">Shine → sketchy/flat <b>+5–10€</b></div><div class="ep">Nude boobs only <b>+20%</b></div><div class="ep">NSFW <b>+20–40%</b></div></div></div>
+    <div class="dm">Don't see what you're looking for? <strong>DM me! ❤</strong> I'm flexible and love discussing new ideas!</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════ JELLIES ══════ -->
+<section id="jellies">
+  <div class="wrap">
+    <div class="sec-top center">
+      <div class="eyebrow">✦ Closed species ✦</div>
+      <h2 class="sec-title">Meet the <span class="acc">Jellies</span></h2>
+      <p class="sec-sub">My very own species — squishy, glowy, and full of personality!</p>
+    </div>
+    <div class="jintro">
+      <div class="jintro-inner">
+        <div class="jintro-text">
+          <h3>🧊 Who are Jellies?</h3>
+          <p>Jellies are a closed species where personality and AU are completely flexible — your imagination is the only limit! Their jelly parts work like a lava lamp: they <strong>glow and have moving bubbles</strong>. Any animal or fantasy species can be a Jelli, with any body type, age, or height welcomed!</p>
+        </div>
+        <div class="jintro-visuals">
+          <div class="jelly-vis" onclick="openLb('Jellies — visual 1','',this)">
+            <div class="phl"><img src="giftie1.png" loading="lazy" decoding="async" style="width:70%;aspect-ratio:2/3;object-fit:cover;">
+          </div>
+          <div class="jelly-vis" onclick="openLb('Jellies — visual 2','',this)">
+            <div class="phi"></div><div class="phl"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="subh tl">🔍 How to spot a Jelli?</p>
+    <div class="traits">
+      <div class="trait"><div class="ti">🔱</div><h4>Horns</h4><p>Always 2+ horns — from giant to tiny, always made from jelly!</p></div>
+      <div class="trait"><div class="ti">✨</div><h4>Jelly Spots</h4><p>Small jelly spots on the face — can be any shape!</p></div>
+      <div class="trait"><div class="ti">🫧</div><h4>Jelly Tail</h4><p>All Jellies have a jelly tail — sometimes subtle, but always there!</p></div>
+      <div class="trait"><div class="ti">💎</div><h4>Jelly Parts</h4><p>Any part of the body can be jelly — any color, even multiple!</p></div>
+      <div class="trait"><div class="ti">👁️</div><h4>Eyes</h4><p>Eyes always match the jelly color!</p></div>
+      <div class="trait"><div class="ti">🐾</div><h4>Species</h4><p>Deer? Fish? Dragon? Any species can be a Jelli!</p></div>
+    </div>
+    <p class="subh">Jellies × UniAlies</p>
+    <div class="cmp">
+      <div class="spc j">
+        <div class="spc-img" onclick="openLb('Jellies example','',this)"><div class="art-ph tp"><div class="phi">🫧</div><div class="phl">J<img src="jelli3.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div></div></div>
+        <div class="spc-body"><h3>Jellies</h3><span class="spc-badge">Closed species — available</span><ul class="stl"><li>2 or more horns</li><li>Any animal or fantasy species</li><li>Any part can be jelly</li><li>Any type of eyes</li><li>Gems on the face</li><li>Gender-neutral appearance</li></ul></div>
+      </div>
+      <div class="spc u">
+        <div class="spc-img" onclick="openLb('UniAlies example','',this)"><div class="art-ph pp"><div class="phi">🦄</div><div class="phl"><img src="unialie.png" loading="lazy" decoding="async" style="width:100%;aspect-ratio:1/1;object-fit:cover;"></div></div></div>
+        <div class="spc-body"><h3>UniAlies</h3><span class="spc-badge">Private species — not available</span><ul class="stl"><li>Only 1 horn</li><li>One specific species only</li><li>Only specific parts are jelly</li><li>One type of eyes</li><li>Antennas</li><li>Males and females differ</li></ul></div>
+      </div>
+    </div>
+    <p class="warn">⚠️ Jellies are NOT UniAlies! They are two completely separate species!</p>
+    <p class="subh lm">How to get a Jelli? 💚</p>
+    <div class="get-grid">
+      <div class="gc"><h3>Adopts</h3><p>Pre-made Jellies for adoption! Follow my socials to not miss any.</p></div>
+      <div class="gc"><h3>Auctions</h3><p>Special Jellies up for auction. Watch my socials for announcements!</p></div>
+      <div class="gc"><span class="spill">OPEN</span><h3>Custom on Base</h3><span class="gp">45€ / 53$</span><p>DM me to claim your slot!</p></div>
+      <div class="gc"><span class="spill">1/3 OPEN</span><h3>Custom by Hand</h3><span class="gp">80€+ / 93$+</span><p>Hand-drawn custom. DM to claim!</p></div>
+      <div class="gc"><span class="spill">3/3 OPEN</span><h3>Bundle</h3><span class="gp">off 20€!</span><p>When ordering custom with reference sheet you get 20€ off! Dm me for more info!</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════ SOCIALS ══════ -->
+<section id="socials">
+  <div class="wrap">
+    <div class="sec-top center">
+      <div class="eyebrow">✦ Find me online ✦</div>
+      <h2 class="sec-title">Where to <span class="acc">Find Me?</span></h2>
+      <p class="sec-sub">Come say hi! I'd love to hear from you. 👋</p>
+    </div>
+    <div class="soc-wrap">
+      <a class="sc ig" href="https://www.instagram.com/limie.arts/" target="_blank" rel="noopener">
+        <div class="sc-ico">📸</div>
+        <div class="sc-info"><span class="sc-name">Instagram</span><span class="sc-hand">@limie.arts</span></div>
+        <span class="sc-tag">Suggestive</span><span class="sc-arr">→</span>
+      </a>
+      <a class="sc bsky" href="https://bsky.app/profile/limiearts.bsky.social" target="_blank" rel="noopener">
+        <div class="sc-ico">🦋</div>
+        <div class="sc-info"><span class="sc-name">Bluesky</span><span class="sc-hand">@limiearts.bsky.social</span></div>
+        <span class="sc-tag">NSFW</span><span class="sc-arr">→</span>
+      </a>
+      <a class="sc fa" href="https://www.furaffinity.net/user/limiearts" target="_blank" rel="noopener">
+        <div class="sc-ico">🐾</div>
+        <div class="sc-info"><span class="sc-name">Fur Affinity</span><span class="sc-hand">limiearts</span></div>
+        <span class="sc-tag">NSFW</span><span class="sc-arr">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════ TOS ══════ -->
+<section id="tos">
+  <div class="wrap">
+    <div class="sec-top center">
+      <div class="eyebrow">✦ Please read before commissioning ✦</div>
+      <h2 class="sec-title">Terms of <span class="acc">Service</span></h2>
+      <p class="sec-sub">By commissioning me, you agree to these terms. Thank you for respecting my work! 💚</p>
+    </div>
+    <div class="tos-list">
+      <div class="tc open"><div class="th" onclick="toggleTos(this)"><div class="th-ico">📋</div><h3>General &amp; Usage</h3><span class="th-chev">▼</span></div><div class="tb"><div class="ti-wrap">
+        <div class="tr"><div class="td"></div><div><strong>Right to Refuse:</strong> I reserve the right to decline any commission — uncomfortable subject matter, rude behavior, or style mismatch.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Personal Use Only:</strong> Commissions are for personal use (PFPs, wallpapers, home prints). No selling or profiting from my artwork.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Commercial Use:</strong> Streaming assets, merch, branding? Contact me to discuss the commercial fee!</div></div>
+        <div class="tr"><div class="td"></div><div><strong>NO AI Training:</strong> My artwork is strictly prohibited from AI training or machine learning datasets of any kind.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Modifications:</strong> No editing, tracing, or altering my artwork without permission.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Copyright:</strong> I retain full copyright and may post finished commissions on my portfolio and social media.</div></div>
+      </div></div></div>
+      <div class="tc"><div class="th" onclick="toggleTos(this)"><div class="th-ico">💳</div><h3>Payment</h3><span class="th-chev">▼</span></div><div class="tb"><div class="ti-wrap">
+        <div class="tr"><div class="td"></div><div><strong>Method:</strong> Payments via PayPal in CZK currency.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Timing:</strong> Payment required after sketch approval — lining/coloring starts only after payment.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Payment Plans:</strong> Split payments for orders over €100 only. Schedule agreed individually.</div></div>
+      </div></div></div>
+      <div class="tc"><div class="th" onclick="toggleTos(this)"><div class="th-ico">🎨</div><h3>Process, Revisions &amp; WIPs</h3><span class="th-chev">▼</span></div><div class="tb"><div class="ti-wrap">
+        <div class="tr"><div class="td"></div><div><strong>Workflow:</strong> I send frequent WIP updates so you can guide the art in the right direction!</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Trello:</strong> Track your commission on my <a class="tl" href="https://trello.com/b/EfwCAq4F/" target="_blank">Trello board</a>.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Sketch Phase:</strong> Major changes (pose, composition, design) are free!</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Coloring Phase:</strong> Minor color tweaks only.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Finished Piece:</strong> No edits once done, or subject to additional fee.</div></div>
+      </div></div></div>
+      <div class="tc"><div class="th" onclick="toggleTos(this)"><div class="th-ico">🔄</div><h3>Refunds &amp; Cancellations</h3><span class="th-chev">▼</span></div><div class="tb"><div class="ti-wrap">
+        <div class="tr"><div class="td"></div><div><strong>Artist Cancellation:</strong> Full refund if I can't complete your commission.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Before payment/work starts:</strong> Free to cancel, no charge!</div></div>
+        <div class="tr"><div class="td"></div><div><strong>After sketch &amp; payment:</strong> 50% refund depending on work completed.</div></div>
+        <div class="tr"><div class="td"></div><div><strong>Completed artwork:</strong> No refunds issued.</div></div>
+      </div></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fb">Limie.Arts</div>
+  <p>Digital artist · Furry art · Closed species owner</p>
+  <p style="margin-top:.45rem;">
+    <a href="https://www.instagram.com/limie.arts/" target="_blank">Instagram</a> ·
+    <a href="https://bsky.app/profile/limiearts.bsky.social" target="_blank">Bluesky</a> ·
+    <a href="https://www.furaffinity.net/user/limiearts" target="_blank">Fur Affinity</a>
+  </p>
+  <p style="margin-top:.9rem;font-size:.7rem;opacity:.4;">© Limie.Arts — All artwork is protected by copyright.</p>
+</footer>
+
+<script>
+/* nav active */
+document.querySelectorAll('section[id]').forEach(s=>{
+  new IntersectionObserver(e=>{
+    e.forEach(x=>{if(x.isIntersecting)
+      document.querySelectorAll('.nav-links a,.mob-nav a').forEach(a=>
+        a.classList.toggle('active',a.getAttribute('href')==='#'+x.target.id));
+    });
+  },{rootMargin:'-40% 0px -55% 0px'}).observe(s);
+});
+
+/* mobile menu */
+function toggleMenu(){
+  const b=document.getElementById('burger'),m=document.getElementById('mobNav');
+  b.classList.toggle('open');m.classList.toggle('open');
+  document.body.style.overflow=m.classList.contains('open')?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('mobNav').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* currency */
+function setCur(c,btn){
+  document.querySelectorAll('.cb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.price[data-eur]').forEach(el=>{
+    const v=c==='eur'?el.dataset.eur:el.dataset.usd, s=c==='eur'?'€':'$';
+    el.innerHTML=v+'<span class="s">'+s+'</span>';
+  });
+}
+
+/* tabs */
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tp-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+/* tos */
+function toggleTos(h){h.parentElement.classList.toggle('open');}
+
+/* lightbox */
+function openLb(title,price,el){
+  document.getElementById('lb-t').textContent=title;
+  const v=parseFloat(price);
+  const eur=document.querySelector('.cb.on').textContent.includes('EUR');
+  if(price==='Open to discuss') document.getElementById('lb-p').textContent='Open to discuss 💬';
+  else if(!isNaN(v)) document.getElementById('lb-p').textContent=eur?v+'€':Math.round(v*1.1)+'$';
+  else document.getElementById('lb-p').textContent=price||'';
+
+  const wrap=document.getElementById('lb-img');
+  wrap.innerHTML='';
+
+  /* Try to find a real <img> inside the clicked element first */
+  const srcImg = el && el.querySelector && el.querySelector('img');
+  if(srcImg){
+    const img=document.createElement('img');
+    img.src=srcImg.src;
+    img.alt=title;
+    img.loading='lazy';
+    img.decoding='async';
+    wrap.appendChild(img);
+  } else {
+    /* Fall back to cloning the placeholder */
+    const ph=el&&el.querySelector&&el.querySelector('.art-ph');
+    if(ph){const c=ph.cloneNode(true);c.style.cssText='width:100%;min-height:220px;cursor:default;';wrap.appendChild(c);}
+    else wrap.textContent='🖼️';
+  }
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLb(e){
+  const lb=document.getElementById('lb');
+  if(e&&e.target!==lb&&!e.target.classList.contains('lb-x'))return;
+  lb.classList.remove('open');document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&document.getElementById('lb').classList.contains('open'))
+    closeLb({target:document.getElementById('lb')});
+});
+
+/* bubbles */
+const bc=['rgba(168,216,80,.45)','rgba(82,184,162,.45)','rgba(158,114,200,.38)','rgba(228,114,176,.38)','rgba(184,137,84,.32)'];
+setInterval(()=>{
+  const b=document.createElement('div');b.className='bub';
+  const sz=Math.random()*14+5,c=bc[Math.floor(Math.random()*bc.length)];
+  b.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;bottom:-20px;background:${c};border:1.5px solid ${c.replace(/[\d.]+\)$/,'.8)')};animation-duration:${Math.random()*5+5}s;`;
+  document.body.appendChild(b);setTimeout(()=>b.remove(),10500);
+},1000);
+
+/* carousel */
+const carousels = {};
+function initCarousel(id) {
+  const track = document.getElementById('car-'+id);
+  if (!track) return;
+  const items = track.querySelectorAll('.car-item');
+  const dotsWrap = document.getElementById('dots-'+id);
+  dotsWrap.innerHTML = '';
+  // figure out visible count from CSS
+  const getVisible = () => {
+    const w = track.parentElement.parentElement.offsetWidth;
+    if (w < 420) return 1;
+    if (w < 700) return 2;
+    return 3;
+  };
+  const totalDots = () => Math.ceil(items.length / getVisible());
+  let cur = 0;
+  // build dots
+  const buildDots = () => {
+    dotsWrap.innerHTML = '';
+    for (let i = 0; i < totalDots(); i++) {
+      const d = document.createElement('button');
+      d.className = 'car-dot' + (i === cur ? ' on' : '');
+      d.onclick = () => goTo(i);
+      dotsWrap.appendChild(d);
+    }
+  };
+  const goTo = (idx) => {
+    cur = Math.max(0, Math.min(idx, totalDots() - 1));
+    const itemW = items[0].offsetWidth + 16; // gap = 1rem = 16px
+    track.scrollTo({ left: cur * getVisible() * itemW, behavior: 'smooth' });
+    buildDots();
+  };
+  // sync dots on scroll
+  track.addEventListener('scroll', () => {
+    const itemW = items[0].offsetWidth + 16;
+    cur = Math.round(track.scrollLeft / (getVisible() * itemW));
+    buildDots();
+  }, { passive: true });
+  carousels[id] = goTo;
+  buildDots();
+}
+function carMove(id, dir) {
+  if (carousels[id]) {
+    const track = document.getElementById('car-'+id);
+    const items = track.querySelectorAll('.car-item');
+    const getVisible = () => {
+      const w = track.parentElement.parentElement.offsetWidth;
+      if (w < 420) return 1; if (w < 700) return 2; return 3;
+    };
+    const totalDots = Math.ceil(items.length / getVisible());
+    const dotsWrap = document.getElementById('dots-'+id);
+    let cur = [...dotsWrap.querySelectorAll('.car-dot')].findIndex(d=>d.classList.contains('on'));
+    carousels[id](cur + dir);
+  }
+}
+// init on load
+window.addEventListener('DOMContentLoaded', () => {
+  initCarousel('refs');
+  initCarousel('customs');
+});
+// re-init on tab click for correct measurements
+const origShow = window.showTab;
+window.showTab = function(id, btn) {
+  origShow(id, btn);
+  if (id === 'refs' || id === 'customs') setTimeout(() => initCarousel(id), 50);
+};
+</script>
+</body>
+</html>
